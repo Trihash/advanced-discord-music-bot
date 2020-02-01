@@ -113,17 +113,32 @@ async function launch(message, url, play, queue, serverQueue){
 
 function search(message, args, play, serverQueue, queue){
 	let filter;
-	var options = {
-		limit: 5,
-	}
-	ytsr(args.join(' '), options, async function(err, searchResults) {
+	ytsr.getFilters(args.join(' '), function(err, filters) {
 		if(err){
 			console.error(err)
 			message.channel.send('Error: ' + err)
 		}
-		var url = searchResults.items[0].link
-		launch(message, url, play, queue, serverQueue)
-	});
+		filter = filters.get('Type').find(o => o.name === 'Video');
+		ytsr.getFilters(filter.ref, function(err, filters) {
+			if(err){
+				console.error(err)
+				message.channel.send('Error: ' + err)
+			}
+			filter = filters.get('Duration').find(o => o.name.startsWith('Short'));
+			var options = {
+				limit: 5,
+				nextpageRef: filter.ref,
+			}
+			ytsr(null, options, async function(err, searchResults) {
+				if(err){
+					console.error(err)
+					message.channel.send('Error: ' + err)
+				}
+				var url = searchResults.items[0].link
+				launch(message, url, play, queue, serverQueue)
+			});
+	  	});
+  	});
 }
 
 async function execute(message, play, serverQueue, queue) {
