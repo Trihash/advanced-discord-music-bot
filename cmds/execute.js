@@ -113,16 +113,16 @@ async function launch(message, url, play, queue, serverQueue){
 
 function search(message, args, play, serverQueue, queue){
 	let filter;
-	ytsr.getFilters(args.join(' '), function(err, filters) {
+	ytsr.getFilters(args.join(' '), function(err, aa) {
 		if(err){
 			console.error(err)
-			message.channel.send('Error: ' + err)
+			message.channel.send(err)
 		}
-		filter = filters.get('Type').find(o => o.name === 'Video');
+		filter = aa.get('Type').find(o => o.name === 'Video');
 		ytsr.getFilters(filter.ref, function(err, filters) {
 			if(err){
 				console.error(err)
-				message.channel.send('Error: ' + err)
+				message.channel.send(err)
 			}
 			filter = filters.get('Duration').find(o => o.name.startsWith('Short'));
 			var options = {
@@ -132,7 +132,7 @@ function search(message, args, play, serverQueue, queue){
 			ytsr(null, options, async function(err, searchResults) {
 				if(err){
 					console.error(err)
-					message.channel.send('Error: ' + err)
+					message.channel.send(err)
 				}
 				var url = searchResults.items[0].link
 				launch(message, url, play, queue, serverQueue)
