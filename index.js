@@ -24,6 +24,10 @@ client.once('disconnect', () => {
 
 client.on('message', async message => {
 	if (message.author.bot) return;
+	if (message.channel.type !== 'text') {
+		message.channel.send('Wola t\'as cru qu\'on pouvait écouter de la musique en privée, fais toi un serveur privée!')
+		return;
+	}
 	if (!message.content.startsWith(prefix)) return;
 	const serverQueue = queue.get(message.guild.id);
 
