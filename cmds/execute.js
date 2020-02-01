@@ -129,7 +129,7 @@ function search(message, args, play, serverQueue, queue){
 				limit: 5,
 				nextpageRef: filter.ref,
 			}
-			ytsr(null, options, async function(err, searchResults) {
+			ytsr(args.join(' '), options, async function(err, searchResults) {
 				if(err){
 					console.error(err)
 					message.channel.send('Error: ' + err)
