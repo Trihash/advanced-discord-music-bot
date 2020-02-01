@@ -112,13 +112,14 @@ async function launch(message, url, play, queue, serverQueue){
 }
 
 function search(message, args, play, serverQueue, queue){
+	try{
 	let filter;
-	ytsr.getFilters(args.join(' '), function(err, aa) {
+	ytsr.getFilters(args.join(' '), function(err, filters) {
 		if(err){
 			console.error(err)
 			message.channel.send(err)
 		}
-		filter = aa.get('Type').find(o => o.name === 'Video');
+		filter = filters.get('Type').find(o => o.name === 'Video');
 		ytsr.getFilters(filter.ref, function(err, filters) {
 			if(err){
 				console.error(err)
@@ -138,7 +139,11 @@ function search(message, args, play, serverQueue, queue){
 				launch(message, url, play, queue, serverQueue)
 			});
 	  	});
-  	});
+	  });
+	} catch(err){
+		console.error(err)
+		message.channel.send(err)
+	}
 }
 
 async function execute(message, play, serverQueue, queue) {
