@@ -14,10 +14,10 @@ A complete script to use Youtube music with discord.js (only Youtube)
 
 ## Commands
 
-- `play <Youtube URL>`
+- `play <Youtube URL>` - `playnow <Youtube URL>`
 - `skip`
 - `stop`
-- `queue`
+- `nowplaying` - `queue`
 
 And that's it!
 
