@@ -55,15 +55,17 @@ async function playlist(message, args, play, queue, serverQueue){
 				}
 			
 		 } else {
+			 var array = []
 			await Promise.all(playlist.items.map(async (item) => {
 				const songInfo = await ytdl.getInfo(item.url_simple);
 				const song = {
 					title: songInfo.title,
 					url: songInfo.video_url,
 				};
-				serverQueue.songs.push(song)
-				console.log(`[Playlist] ${songInfo.title} (${songInfo.video_url}) added in ${message.guild.name}`)
+				array.push(song)
+				console.log(`[Playlist] ${songInfo.title} (${songInfo.video_url}) added in ${message.guild.name} in first`)
 			  }));
+			  serverQueue.songs.splice(1, 0, array)
 		}
 	});
         } catch (err) {
@@ -92,11 +94,12 @@ async function launch(message, url, play, queue, serverQueue){
 			textChannel: message.channel,
 			voiceChannel: voiceChannel,
 			connection: null,
-			songs: [song],
+			songs: [],
 			volume: 100,
 			playing: true,
 		};
 	  
+		serverQueue.songs.push(song)
 		queue.set(message.guild.id, queueContruct);
 	  
 		try {
@@ -110,10 +113,10 @@ async function launch(message, url, play, queue, serverQueue){
 			return message.channel.send(err);
 		}
 	} else {
-		serverQueue.songs.push(song);
-		message.channel.send(`${song.title} has been added to the queue!`);
+		serverQueue.songs.splice(1, 0, song);
+		message.channel.send(`${song.title} has been added to the next song!`);
 	}
-	console.log(`${songInfo.title} (${songInfo.video_url}) added in ${message.guild.name}`)
+	console.log(`${songInfo.title} (${songInfo.video_url}) added in ${message.guild.name} in first`)
         } catch (err) {
                 console.error(err)
                 message.channel.send('Error: ' + err)
@@ -155,7 +158,7 @@ function search(message, args, play, serverQueue, queue){
 	}
 }
 
-async function execute(message, play, serverQueue, queue) {
+async function executenow(message, play, serverQueue, queue) {
     try {
 		let args = message.content.split(' ');
 		args.shift();
@@ -178,4 +181,4 @@ async function execute(message, play, serverQueue, queue) {
     }
 }
 
-module.exports = execute
+module.exports = executenow
