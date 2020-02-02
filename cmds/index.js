@@ -16,6 +16,9 @@ function cmds_index(message, client, prefix, serverQueue, queue, config){
 	} else if (message.content.toLowerCase() == `${prefix}queue` || message.content.toLowerCase() == `${prefix}q`) {
         const queue = require('./queue.js')
 		queue(message, serverQueue);
+	} else if (message.content.toLowerCase() == `${prefix}nowplaying` || message.content.toLowerCase() == `${prefix}np`) {
+        const nowplaying = require('./nowplaying.js')
+		nowplaying(message, client, serverQueue);
 	} else if (message.content.toLowerCase().startsWith(`${prefix}volume`) || message.content.toLowerCase().startsWith(`${prefix}vol`)) {
         const volume = require('./volume.js')
 		volume(message);
@@ -24,10 +27,17 @@ function cmds_index(message, client, prefix, serverQueue, queue, config){
             const eval_cmd = require('./eval.js')
             eval_cmd(message, client, prefix)
         } else {
-            message.reply('Nope')
+            message.react('❎')
+        }
+    } else if (message.content.toLowerCase().startsWith(`${prefix}update`)) {
+        if (message.author.id === config.owner){
+            const update = require('./update.js')
+            update(message, client, prefix)
+        } else {
+            message.react('❎')
         }
     } else {
-		message.react('✖')
+		message.react('❎')
 	}
 }
 
