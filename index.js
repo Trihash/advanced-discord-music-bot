@@ -3,6 +3,7 @@ const {
 	prefix,
 	token,
 } = require('./config.json');
+const config = require('./config.json');
 const ytdl = require('ytdl-core');
 
 const client = new Discord.Client();
@@ -32,7 +33,7 @@ client.on('message', async message => {
 	const serverQueue = queue.get(message.guild.id);
 
 	const cmds_index = require('./cmds/index.js')
-	cmds_index(message, client, prefix, serverQueue, queue)	
+	cmds_index(message, client, prefix, serverQueue, queue, config)	
 });
 
 client.login(token);
