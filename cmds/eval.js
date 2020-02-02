@@ -18,12 +18,12 @@ const Discord = require("discord.js");
              if (typeof evaled !== "string"){
                 evaled = require("util").inspect(evaled);
             }
-             message.channel.send(`\`\`\`${clean(evaled)}\`\`\``);
+             message.channel.send(`\`\`\`${clean(evaled).substring(0, 1800)}\`\`\``);
             
        } catch (err) {
             const args = message.content.split(" ").slice(1);
             const code = args.join(" ");
-            message.channel.send(`\`\`\`${clean(err)}\`\`\``);
+            message.channel.send(`\`\`\`${clean(err).substring(0, 1800)}\`\`\``);
         }
     }
  }
