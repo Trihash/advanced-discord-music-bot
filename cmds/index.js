@@ -16,15 +16,17 @@ function cmds_index(message, client, prefix, serverQueue, queue, config){
 	} else if (message.content.toLowerCase() == `${prefix}queue` || message.content.toLowerCase() == `${prefix}q`) {
         const queue = require('./queue.js')
 		queue(message, serverQueue);
+	} else if (message.content.toLowerCase().startsWith(`${prefix}volume`) || message.content.toLowerCase().startsWith(`${prefix}vol`)) {
+        const volume = require('./volume.js')
+		volume(message);
 	} else if (message.content.toLowerCase().startsWith(`${prefix}eval`)) {
-            if (message.author.id === config.owner){
-                const eval_cmd = require('./eval.js')
-                eval_cmd(message, client, prefix)
-            } else {
-                message.reply('Nope')
-            }
-
+        if (message.author.id === config.owner){
+            const eval_cmd = require('./eval.js')
+            eval_cmd(message, client, prefix)
         } else {
+            message.reply('Nope')
+        }
+    } else {
 		message.react('✖')
 	}
 }

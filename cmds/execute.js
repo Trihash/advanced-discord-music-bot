@@ -40,7 +40,7 @@ async function playlist(message, args, play, queue, serverQueue){
 					url: songInfo.video_url,
 				};
 				queueContruct.songs.push(song)
-				console.log(`${songInfo.title} added in ${message.guild.name}`)
+				console.log(`${songInfo.title} (${songInfo.video_url}) added in ${message.guild.name}`)
 			  }));
 
 				try {
@@ -62,7 +62,7 @@ async function playlist(message, args, play, queue, serverQueue){
 					url: songInfo.video_url,
 				};
 				serverQueue.songs.push(song)
-				console.log(`${songInfo.title} added in ${message.guild.name}`)
+				console.log(`${songInfo.title} (${songInfo.video_url}) added in ${message.guild.name}`)
 			  }));
 		}
 	});
@@ -113,7 +113,7 @@ async function launch(message, url, play, queue, serverQueue){
 		serverQueue.songs.push(song);
 		message.channel.send(`${song.title} has been added to the queue!`);
 	}
-	console.log('Added ' + songInfo.title)
+	console.log(`${songInfo.title} (${songInfo.video_url}) added in ${message.guild.name}`)
         } catch (err) {
                 console.error(err)
                 message.channel.send('Error: ' + err)
