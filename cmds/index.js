@@ -4,12 +4,12 @@ function cmds_index(message, client, prefix, serverQueue, queue, config){
 
     const play = require('./play.js')
 
-    if (message.content.toLowerCase().startsWith(`${prefix}play`) || message.content.toLowerCase().startsWith(`${prefix}p`)) {
-        const execute = require('./execute.js')
-		execute(message, play, serverQueue, queue);
-	} else if (message.content.toLowerCase().startsWith(`${prefix}playnow`) || message.content.toLowerCase().startsWith(`${prefix}pn`)) {
+    if (message.content.toLowerCase().startsWith(`${prefix}playnow `) || message.content.toLowerCase().startsWith(`${prefix}pn `)) {
         const executenow = require('./executenow.js')
 		executenow(message, play, serverQueue, queue);
+	} else if (message.content.toLowerCase().startsWith(`${prefix}play `) || message.content.toLowerCase().startsWith(`${prefix}p `)) {
+        const execute = require('./execute.js')
+		execute(message, play, serverQueue, queue);
 	} else if (message.content.toLowerCase() == `${prefix}skip`) {
         const skip = require('./skip.js')
 		skip(message, serverQueue);
