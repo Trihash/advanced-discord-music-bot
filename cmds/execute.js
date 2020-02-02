@@ -5,7 +5,8 @@ const ytpl = require('ytpl')
 const wait = require('util').promisify(setTimeout);
 
 async function playlist(message, args, play, queue, serverQueue){
-	ytpl(args[0].replace('https://www.youtube.com/playlist?list=',''), async function(err, playlist) {
+	try{
+        ytpl(args[0].replace('https://www.youtube.com/playlist?list=',''), async function(err, playlist) {
 		if(err){
 			console.error(err)
 			message.channel.send('Error: ' + err)
@@ -65,10 +66,14 @@ async function playlist(message, args, play, queue, serverQueue){
 			  }));
 		}
 	});
+        } catch (err) {
+                console.error(err)
+                message.channel.send('Error: ' + err)
+        }
 }
 
 async function launch(message, url, play, queue, serverQueue){
-
+        try {
 	const voiceChannel = message.member.voiceChannel;
 	if (!voiceChannel) return message.channel.send('You need to be in a voice channel to play music!');
 	const permissions = voiceChannel.permissionsFor(message.client.user);
@@ -109,6 +114,10 @@ async function launch(message, url, play, queue, serverQueue){
 		message.channel.send(`${song.title} has been added to the queue!`);
 	}
 	console.log('Added ' + songInfo.title)
+        } catch (err) {
+                console.error(err)
+                message.channel.send('Error: ' + err)
+        }
 }
 
 function search(message, args, play, serverQueue, queue){
